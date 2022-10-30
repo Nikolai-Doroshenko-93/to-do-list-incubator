@@ -3,6 +3,9 @@ import {FilterType} from "../App";
 import addItemForm from "../AddItemForm/AddItemForm";
 import AddItemForm from "../AddItemForm/AddItemForm";
 import EditableSpan from "../EditableSpan/EditableSpan";
+import {Button, ButtonGroup, Checkbox, IconButton, List, ListItem, Typography} from "@material-ui/core";
+import HighlightOffTwoToneIcon from '@material-ui/icons/HighlightOffTwoTone';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 // import s from './Todolist.module.css'
 
 export type TaskType = {
@@ -35,20 +38,28 @@ export function TodoList(props: PropsType) {
             props.changeTaskTitle(t.id, title, props.todoListId)
         }
         return (
-            <li key={t.id}>
-                <input
+            <ListItem
+                style={{
+                    padding: "0px",
+                    justifyContent: "space-between",
+                    textDecoration: t.isDone ? "line-through" : "none"
+                }}
+                key={t.id}>
+                <Checkbox
+                    color={"primary"}
+                    size={"small"}
                     onChange={changeTaskStatus}
-                    type={"checkbox"}
                     checked={t.isDone}
                 />
-                {/*<span>{t.title}</span>*/}
                 <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
-                <button onClick={removeTask}>x</button>
-            </li>
+                <IconButton onClick={removeTask} size={"small"} color={"secondary"}>
+                    <HighlightOffTwoToneIcon/>
+                </IconButton>
+            </ListItem>
         )
     }
     const tasksList = props.tasks.length
-        ? <ul>{props.tasks.map(getTasksListItem)}</ul>
+        ? <List style={{width: "290px"}}>{props.tasks.map(getTasksListItem)}</List>
         : <span> Your taskslist is empty :(</span>
 
     const addTask = (title: string) => {
@@ -62,28 +73,41 @@ export function TodoList(props: PropsType) {
     }
     return (
         <div>
-            <h3>
+            <Typography variant={"h5"}
+                        align={"center"}
+                        style={{fontWeight:"bold", margin: "20px"}}>
                 <EditableSpan title={props.title} changeTitle={changeTodoListTitle}/>
-                <button
-                    onClick={removeTodoList}
-                >x</button>
-            </h3>
+                <IconButton size={"small"} onClick={removeTodoList} color={"secondary"}>
+                    <DeleteForeverIcon/>
+                </IconButton>
+            </Typography>
             <AddItemForm
-                addItem={addTask}/>
+                addItem={addTask}
+            />
                 {tasksList}
             <div>
-                <button
-                    onClick={handlerCreator("All")}
-                >All
-                </button>
-                <button
-                    onClick={handlerCreator("Active")}
-                >Active
-                </button>
-                <button
-                    onClick={handlerCreator("Completed")}
-                >Completed
-                </button>
+                <ButtonGroup
+                    variant={"contained"}
+                    size={"small"}
+                    fullWidth
+                    style={{width: "280px", margin: "10px"}}
+                >
+                    <Button
+                        color={props.filter === "All" ? "secondary" : "primary"}
+                        onClick={handlerCreator("All")}
+                    >All
+                    </Button>
+                    <Button
+                        color={props.filter === "Active" ? "secondary" : "primary"}
+                        onClick={handlerCreator("Active")}
+                    >Active
+                    </Button>
+                    <Button
+                        color={props.filter === "Completed" ? "secondary" : "primary"}
+                        onClick={handlerCreator("Completed")}
+                    >Completed
+                    </Button>
+                </ButtonGroup>
             </div>
         </div>
     )
