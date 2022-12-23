@@ -1,7 +1,7 @@
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer'
 import {TasksStateType, TodolistType} from '../App'
 import {v1} from "uuid";
-import {AddTodolistAC, todolistsReducer} from "./todolists-reducer";
+import {addTodolistAC, todolistsReducer} from "./todolists-reducer";
 
 let startState: TasksStateType
 
@@ -78,7 +78,7 @@ test('title of task should be changed', () => {
 test('new array of specified task should be changed', () => {
 
 
-    const action = AddTodolistAC('new todolist')
+    const action = addTodolistAC('new todolist')
 
     const endState = tasksReducer(startState, action)
 
