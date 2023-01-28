@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Reducer,useReducer, useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
@@ -6,6 +6,9 @@ import {AddItemForm} from './AddItemForm';
 import AppBar from '@mui/material/AppBar/AppBar';
 import {Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
+import {ActionsType, todolistsReducer} from "./state/todolists-reducer";
+import {tasksReducer} from "./state/tasks-reducer";
+// import {Reducer} from "redux";
 
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -24,12 +27,12 @@ function App() {
     let todolistId1 = v1();
     let todolistId2 = v1();
 
-    let [todolists, setTodolists] = useState<Array<TodolistType>>([
+    let [todolists, dispatchTodolists] = useReducer<Reducer<Array<TodolistType>, ActionsType>>(todolistsReducer,[
         {id: todolistId1, title: "What to learn", filter: "all"},
         {id: todolistId2, title: "What to buy", filter: "all"}
     ])
 
-    let [tasks, setTasks] = useState<TasksStateType>({
+    let [tasks, dispathTasks] = useReducer(tasksReducer,{
         [todolistId1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true}
