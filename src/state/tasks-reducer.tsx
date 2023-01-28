@@ -12,8 +12,8 @@ type ActionsType = RemoveTaskActionType
                     | AddTaskActionType
                     | ChangeTaskStatusActionType
                     | ChangeTaskTitleActionType
-                    |AddTodolistActionType
-                    |RemoveTodolistActionType;
+                    | AddTodolistActionType
+                    | RemoveTodolistActionType;
 
 export const tasksReducer = (state: TasksStateType, action: ActionsType) => {
     switch (action.type) {
