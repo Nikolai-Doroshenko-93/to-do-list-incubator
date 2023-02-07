@@ -1,22 +1,20 @@
-import React, {Reducer, useCallback, useReducer, useState} from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
-import {v1} from 'uuid';
 import {AddItemForm} from './AddItemForm';
 import AppBar from '@mui/material/AppBar/AppBar';
 import {Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {
-    ActionsType, AddTodolistAC,
+    AddTodolistAC,
     ChangeTodolistFilterAC,
     ChangeTodolistTitleAC,
     RemoveTodolistAC,
-    todolistsReducer
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
-// import {Reducer} from "redux";
+
 
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -50,9 +48,9 @@ function App() {
         dispatch(addTaskAC(title, todolistId))
     }, [dispatch]);
 
-    const changeStatus = useCallback((id: string, isDone: boolean, todolistId: string) => {
+    const changeStatus = useCallback((todolistId: string,id: string,  isDone: boolean) => {
         //достанем нужный массив по todolistId:
-        dispatch(changeTaskStatusAC(id, todolistId, isDone))
+        dispatch(changeTaskStatusAC(todolistId, id, isDone))
     }, [dispatch]);
 
     const changeTaskTitle = useCallback((id: string, newTitle: string, todolistId: string) => {

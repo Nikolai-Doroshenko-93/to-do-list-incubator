@@ -58,7 +58,7 @@ function App() {
         dispathTasks(addTaskAC(title, todolistId))
     }
 
-    function changeStatus(id: string, isDone: boolean, todolistId: string) {
+    function changeStatus(id: string,  todolistId: string, isDone: boolean) {
         //достанем нужный массив по todolistId:
         dispathTasks(changeTaskStatusAC(id, todolistId, isDone))
     }
