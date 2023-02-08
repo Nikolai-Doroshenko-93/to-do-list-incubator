@@ -20,7 +20,7 @@ export type TasksPropsType = {
 }
 
 
-const Tasks = memo(({
+const Task = memo(({
                    task,
                    removeTask,
                    changeTaskStatus,
@@ -56,4 +56,4 @@ const Tasks = memo(({
         )
 })
 
-export default Tasks
+export default Task
