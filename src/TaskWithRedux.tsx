@@ -24,31 +24,30 @@ const TaskWithRedux = memo(({
                    task,
                    todolistId
 }: TasksPropsType) => {
-    let {id, title, isDone} = task
     const dispatch = useDispatch()
 
 
 
-    const onClickHandler = () => dispatch(removeTaskAC(id, todolistId))
+    const onClickHandler = () => dispatch(removeTaskAC(task.id, todolistId))
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
 
-        dispatch(changeTaskStatusAC(todolistId, id,  newIsDoneValue));
+        dispatch(changeTaskStatusAC(todolistId, task.id,  newIsDoneValue));
     }
     const onTitleChangeHandler = (newValue: string) => {
-        dispatch(changeTaskTitleAC(todolistId, id, newValue));
+        dispatch(changeTaskTitleAC(todolistId, task.id, newValue));
     }
 
     return (
-        <div className={isDone ? "is-done" : ""}>
+        <div key={task.id} className={task.isDone ? "is-done" : ""}>
             <Checkbox
-                checked={isDone}
+                checked={task.isDone}
                 color="primary"
                 onChange={onChangeHandler}
             />
 
-            <EditableSpan value={title} onChange={onTitleChangeHandler} />
+            <EditableSpan value={task.title} onChange={onTitleChangeHandler} />
             <IconButton onClick={onClickHandler}>
                 <Delete />
             </IconButton>

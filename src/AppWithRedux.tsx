@@ -29,7 +29,7 @@ export type TasksStateType = {
 }
 
 
-function App() {
+function AppWithRedux() {
 
     const todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolists)
 
@@ -124,4 +124,4 @@ function App() {
     );
 }
 
-export default App;
+export default AppWithRedux;

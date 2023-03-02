@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import {Delete} from "@mui/icons-material";
 import {Button, Checkbox} from "@mui/material";
 import Task from "./Task";
-import TaskWithRedux from "./TaskWith Redux";
+import TaskWithRedux from "./TaskWithRedux";
 
 
 export type TaskType = {

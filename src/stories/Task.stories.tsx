@@ -41,15 +41,17 @@ const Template1: ComponentStory<typeof Task> = (args) => {
   function changeTaskTitle (taskId: string, newTitle: string) {
     setTask({id: 'aaa', title: newTitle, isDone: false})
   }
-function removeTask () {
-    console.log('remove task')
-}
+
   return <Task
       task={task}
-      removeTask={removeTask}
+      removeTask={args.removeTask}
       changeTaskTitle={changeTaskTitle}
       changeTaskStatus={changeTaskStatus}
   />
 };
 
 export const TaskStory = Template1.bind({});
+
+TaskStory.args = {
+  removeTask: action('remove task')
+}
