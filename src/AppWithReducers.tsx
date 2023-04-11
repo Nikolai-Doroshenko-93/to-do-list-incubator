@@ -1,6 +1,6 @@
-import React, {Reducer,useReducer, useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import {Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from './AddItemForm';
 import AppBar from '@mui/material/AppBar/AppBar';
@@ -9,63 +9,106 @@ import {Menu} from "@mui/icons-material";
 import {
     ActionsType, AddTodolistAC,
     ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC,
-    RemoveTodolistAC,
+    ChangeTodolistTitleAC, FilterValuesType,
+    RemoveTodolistAC, TodolistDomainType,
     todolistsReducer
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
-// import {Reducer} from "redux";
+import {TaskPriorities, TaskStatuses} from "./api/todolists-api";
+import {Reducer} from "redux";
 
 
-export type FilterValuesType = "all" | "active" | "completed";
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
-
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
 
 
 function App() {
     let todolistId1 = v1();
     let todolistId2 = v1();
 
-    let [todolists, dispatchTodolists] = useReducer<Reducer<Array<TodolistType>, ActionsType>>(todolistsReducer,[
-        {id: todolistId1, title: "What to learn", filter: "all"},
-        {id: todolistId2, title: "What to buy", filter: "all"}
+    let [todolists, dispatchTodolists] = useReducer<Reducer<Array<TodolistDomainType>, ActionsType>>(todolistsReducer,[
+        {id: todolistId1, title: "What to learn", filter: "all", order: 0, addedDate: ""},
+        {id: todolistId2, title: "What to buy", filter: "all", order: 0, addedDate: ""}
     ])
-
-    let [tasks, dispathTasks] = useReducer(tasksReducer,{
+//@ts-ignore
+    let [tasks, dispatchTasks] = useReducer(tasksReducer, {
         [todolistId1]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true}
+            {
+                description: "",
+                title: "Css",
+                completed: true,
+                status: TaskStatuses.InProgress,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                id: v1(),
+                todoListId: todolistId1,
+                order: 0,
+                addedDate: ""
+            },
+            {
+                description: "",
+                title: "React",
+                completed: true,
+                status: TaskStatuses.InProgress,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                id: v1(),
+                todoListId: todolistId1,
+                order: 0,
+                addedDate: ""
+            }
         ],
         [todolistId2]: [
-            {id: v1(), title: "Milk", isDone: true},
-            {id: v1(), title: "React Book", isDone: true}
+            {
+                description: "",
+                title: "Milk",
+                completed: true,
+                status: TaskStatuses.InProgress,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                id: v1(),
+                todoListId: todolistId2,
+                order: 0,
+                addedDate: ""
+            },
+            {
+                description: "",
+                title: "Beer",
+                completed: true,
+                status: TaskStatuses.InProgress,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                id: v1(),
+                todoListId: todolistId2,
+                order: 0,
+                addedDate: ""
+            }
         ]
     });
 
 
     function removeTask(id: string, todolistId: string) {
         //достанем нужный массив по todolistId:
-        dispathTasks(removeTaskAC(id, todolistId))
+        //@ts-ignore
+        dispatchTasks(removeTaskAC(id, todolistId))
     }
     function addTask(title: string, todolistId: string) {
-        dispathTasks(addTaskAC(title, todolistId))
+        //@ts-ignore
+        dispatchTasks(addTaskAC(title, todolistId))
     }
 
     function changeStatus(id: string,  todolistId: string, isDone: boolean) {
         //достанем нужный массив по todolistId:
-        dispathTasks(changeTaskStatusAC(id, todolistId, isDone))
+        //@ts-ignore
+        dispatchTasks(changeTaskStatusAC(id, todolistId, isDone))
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
         //достанем нужный массив по todolistId:
-        dispathTasks(changeTaskTitleAC(id, newTitle, todolistId))
+        //@ts-ignore
+        dispatchTasks(changeTaskTitleAC(id, newTitle, todolistId))
     }
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
@@ -75,7 +118,8 @@ function App() {
     function removeTodolist(id: string) {
         let action = RemoveTodolistAC(id)
         dispatchTodolists(action)
-        dispathTasks(action)
+        //@ts-ignore
+        dispatchTasks(action)
     }
 
     function changeTodolistTitle(id: string, title: string) {
@@ -85,7 +129,8 @@ function App() {
     function addTodolist(title: string) {
         let action = AddTodolistAC(title)
         dispatchTodolists(action)
-        dispathTasks(action)
+        //@ts-ignore
+        dispatchTasks(action)
     }
 
     return (
@@ -112,10 +157,12 @@ function App() {
                             let tasksForTodolist = allTodolistTasks;
 
                             if (tl.filter === "active") {
-                                tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
+                                //@ts-ignore
+                                tasksForTodolist = allTodolistTasks.filter(t => t.completed === false);
                             }
                             if (tl.filter === "completed") {
-                                tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
+                                //@ts-ignore
+                                tasksForTodolist = allTodolistTasks.filter(t => t.completed === true);
                             }
 
                             return <Grid key={tl.id} item>

@@ -2,6 +2,8 @@ import React, {ChangeEvent, useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Task from "../Task";
 import {action} from "@storybook/addon-actions";
+import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
+import {v1} from "uuid";
 
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -14,7 +16,17 @@ export default {
     changeTaskStatus: action('changeTaskStatus'),
     changeTaskTitle: action('changeTaskTitle'),
     todolistId: '1234dsrfew',
-    task: {id: 'afewqrewq', title: 'JS', isDone: false},
+    task: {description: "",
+      title: "Beer",
+      completed: false,
+      status: TaskStatuses.InProgress,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      deadline: "",
+      id: v1(),
+      todoListId: 'todolistId',
+      order: 0,
+      addedDate: ""},
   }
 } as ComponentMeta<typeof Task>;
 
@@ -27,19 +39,61 @@ export const TaskIsNotDoneStory = Template.bind({});
 export const TaskIsDoneStory = Template.bind({});
 
 TaskIsDoneStory.args = {
-  task: {id: 'afewqrewq', title: 'React', isDone: true},
+  task: { description: "",
+    title: "Beer",
+    completed: false,
+    status: TaskStatuses.InProgress,
+    priority: TaskPriorities.Low,
+    startDate: "",
+    deadline: "",
+    id: v1(),
+    todoListId: 'todolistId',
+    order: 0,
+    addedDate: ""},
 }
 
 
 
 const Template1: ComponentStory<typeof Task> = (args) => {
-  const  [task, setTask] = useState({id: 'aaa', title: 'TypeScript', isDone: false})
+  const  [task, setTask] = useState({
+    description: "",
+    title: "Beer",
+    completed: false,
+    status: TaskStatuses.InProgress,
+    priority: TaskPriorities.Low,
+    startDate: "",
+    deadline: "",
+    id: v1(),
+    todoListId: 'todolistId',
+    order: 0,
+    addedDate: ""
+  })
 
   function changeTaskStatus (taskId: string, isDone: boolean)  {
-    setTask({id: 'aaa', title: 'TypeScript', isDone: !task.isDone})
+    setTask({description: "",
+      title: "Beer",
+      completed: false,
+      status: TaskStatuses.InProgress,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      deadline: "",
+      id: v1(),
+      todoListId: 'todolistId',
+      order: 0,
+      addedDate: ""})
   }
   function changeTaskTitle (taskId: string, newTitle: string) {
-    setTask({id: 'aaa', title: newTitle, isDone: false})
+    setTask({description: "",
+      title: "Beer",
+      completed: false,
+      status: TaskStatuses.InProgress,
+      priority: TaskPriorities.Low,
+      startDate: "",
+      deadline: "",
+      id: v1(),
+      todoListId: 'todolistId',
+      order: 0,
+      addedDate: ""})
   }
 
   return <Task

@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import './App.css';
-import {TaskType, Todolist} from './Todolist';
+import {Todolist} from './Todolist';
 import {AddItemForm} from './AddItemForm';
 import AppBar from '@mui/material/AppBar/AppBar';
 import {Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
@@ -8,21 +8,14 @@ import {Menu} from "@mui/icons-material";
 import {
     AddTodolistAC,
     ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC,
-    RemoveTodolistAC,
+    ChangeTodolistTitleAC, FilterValuesType,
+    RemoveTodolistAC, TodolistDomainType,
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
+import {TaskType} from "./api/todolists-api";
 
-
-
-export type FilterValuesType = "all" | "active" | "completed";
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -31,7 +24,7 @@ export type TasksStateType = {
 
 function AppWithRedux() {
 
-    const todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolists)
+    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
 
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
 
@@ -48,9 +41,9 @@ function AppWithRedux() {
         dispatch(addTaskAC(title, todolistId))
     }, [dispatch]);
 
-    const changeStatus = useCallback((todolistId: string,id: string,  isDone: boolean) => {
+    const changeStatus = useCallback((todolistId: string,id: string,  completed: boolean) => {
         //достанем нужный массив по todolistId:
-        dispatch(changeTaskStatusAC(todolistId, id, isDone))
+        dispatch(changeTaskStatusAC(todolistId, id, completed))
     }, [dispatch]);
 
     const changeTaskTitle = useCallback((id: string, newTitle: string, todolistId: string) => {

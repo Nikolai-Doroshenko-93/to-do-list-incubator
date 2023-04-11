@@ -5,14 +5,8 @@ import IconButton from "@mui/material/IconButton/IconButton";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
+import {TaskStatuses, TaskType} from "./api/todolists-api";
 
-
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
 export type TasksPropsType = {
     todolistId: string,
@@ -40,9 +34,9 @@ const TaskWithRedux = memo(({
     }
 
     return (
-        <div key={task.id} className={task.isDone ? "is-done" : ""}>
+        <div key={task.id} className={task.completed ? "is-done" : ""}>
             <Checkbox
-                checked={task.isDone}
+                checked={task.completed}
                 color="primary"
                 onChange={onChangeHandler}
             />
