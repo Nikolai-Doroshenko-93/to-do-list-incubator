@@ -7,6 +7,7 @@ import { TaskStatuses, TaskType } from './api/todolists-api'
 
 type TaskPropsType = {
     task: TaskType
+    todolistId: string
     changeTaskStatus: (id: string, completed: boolean, todolistId: string) => void
     changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
     removeTask: (taskId: string, todolistId: string) => void

@@ -5,7 +5,7 @@ import IconButton from "@mui/material/IconButton/IconButton";
 import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasks-reducer";
-import {TaskStatuses, TaskType} from "./api/todolists-api";
+import {TaskType} from "./api/todolists-api";
 
 
 export type TasksPropsType = {

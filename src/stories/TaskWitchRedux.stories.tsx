@@ -1,10 +1,11 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import TaskWithRedux, {TaskType} from "../TaskWithRedux";
+import TaskWithRedux from "../TaskWithRedux";
 import {ReduxStoreProviderDecorator} from "../state/ReduxStoreProviderDecorator";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
-import {TodolistType} from "../AppWithRedux";
+import {TaskType} from "../api/todolists-api";
+
 
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

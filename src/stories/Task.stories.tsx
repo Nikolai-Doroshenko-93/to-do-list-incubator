@@ -69,7 +69,7 @@ const Template1: ComponentStory<typeof Task> = (args) => {
     addedDate: ""
   })
 
-  function changeTaskStatus (taskId: string, isDone: boolean)  {
+  function changeTaskStatus (taskId: string, completed: boolean)  {
     setTask({description: "",
       title: "Beer",
       completed: false,
@@ -98,6 +98,7 @@ const Template1: ComponentStory<typeof Task> = (args) => {
 
   return <Task
       task={task}
+      todolistId={args.todolistId}
       removeTask={args.removeTask}
       changeTaskTitle={changeTaskTitle}
       changeTaskStatus={changeTaskStatus}

@@ -1,4 +1,4 @@
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer'
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, setTasksAC, tasksReducer} from './tasks-reducer'
 import { TasksStateType } from '../AppWithRedux'
 import {AddTodolistAC, RemoveTodolistAC} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
@@ -235,3 +235,13 @@ test('property with todolistId should be deleted', () => {
     expect(endState['todolistId2']).not.toBeDefined()
 })
 
+test('tasks should be adde fot todolist', () => {
+    const action = setTasksAC(startState['todolistId1'], 'todolistId1')
+    const endState = tasksReducer({
+        'todolistId2': [],
+        'todolistId1': []
+    }, action)
+
+    expect(endState['todolistId1'].length).toBe(3)
+    expect(endState['todolistId2'].length).toBe(0)
+})

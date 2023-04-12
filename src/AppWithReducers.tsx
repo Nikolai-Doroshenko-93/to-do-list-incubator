@@ -28,7 +28,7 @@ function App() {
         {id: todolistId1, title: "What to learn", filter: "all", order: 0, addedDate: ""},
         {id: todolistId2, title: "What to buy", filter: "all", order: 0, addedDate: ""}
     ])
-//@ts-ignore
+
     let [tasks, dispatchTasks] = useReducer(tasksReducer, {
         [todolistId1]: [
             {
@@ -91,23 +91,23 @@ function App() {
 
     function removeTask(id: string, todolistId: string) {
         //достанем нужный массив по todolistId:
-        //@ts-ignore
+
         dispatchTasks(removeTaskAC(id, todolistId))
     }
     function addTask(title: string, todolistId: string) {
-        //@ts-ignore
+
         dispatchTasks(addTaskAC(title, todolistId))
     }
 
     function changeStatus(id: string,  todolistId: string, isDone: boolean) {
         //достанем нужный массив по todolistId:
-        //@ts-ignore
+
         dispatchTasks(changeTaskStatusAC(id, todolistId, isDone))
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
         //достанем нужный массив по todolistId:
-        //@ts-ignore
+
         dispatchTasks(changeTaskTitleAC(id, newTitle, todolistId))
     }
 
@@ -118,7 +118,7 @@ function App() {
     function removeTodolist(id: string) {
         let action = RemoveTodolistAC(id)
         dispatchTodolists(action)
-        //@ts-ignore
+
         dispatchTasks(action)
     }
 
@@ -129,7 +129,7 @@ function App() {
     function addTodolist(title: string) {
         let action = AddTodolistAC(title)
         dispatchTodolists(action)
-        //@ts-ignore
+
         dispatchTasks(action)
     }
 
@@ -157,11 +157,11 @@ function App() {
                             let tasksForTodolist = allTodolistTasks;
 
                             if (tl.filter === "active") {
-                                //@ts-ignore
+
                                 tasksForTodolist = allTodolistTasks.filter(t => t.completed === false);
                             }
                             if (tl.filter === "completed") {
-                                //@ts-ignore
+
                                 tasksForTodolist = allTodolistTasks.filter(t => t.completed === true);
                             }
 

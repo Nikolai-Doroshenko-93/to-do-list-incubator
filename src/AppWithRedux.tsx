@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {AddItemForm} from './AddItemForm';
@@ -8,13 +8,14 @@ import {Menu} from "@mui/icons-material";
 import {
     AddTodolistAC,
     ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC, FilterValuesType,
-    RemoveTodolistAC, TodolistDomainType,
+    ChangeTodolistTitleAC, FetchTodolistsTC, FetchTodolistsThunk, FilterValuesType,
+    RemoveTodolistAC, SetTodolistsAC, TodolistDomainType,
 } from "./state/todolists-reducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
-import {TaskType} from "./api/todolists-api";
+import {TaskType, todolistsApi} from "./api/todolists-api";
+import {AnyAction} from "redux";
 
 
 export type TasksStateType = {
@@ -30,8 +31,9 @@ function AppWithRedux() {
 
     const dispatch = useDispatch()
 
-
-
+    useEffect(() => {
+        dispatch(FetchTodolistsTC())
+    }, [])
 
     const removeTask = useCallback((id: string, todolistId: string) => {
         //достанем нужный массив по todolistId:
