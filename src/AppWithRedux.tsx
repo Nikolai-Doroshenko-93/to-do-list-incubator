@@ -8,20 +8,25 @@ import {Menu} from "@mui/icons-material";
 import {
     AddTodolistAC,
     ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC, FetchTodolistsTC, FetchTodolistsThunk, FilterValuesType,
-    RemoveTodolistAC, SetTodolistsAC, TodolistDomainType,
+    ChangeTodolistTitleAC, FetchTodolistsTC, FilterValuesType,
+    RemoveTodolistAC, TodolistDomainType,
 } from "./state/todolists-reducer";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from "./state/tasks-reducer";
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    removeTaskAC,
+    removeTaskTC,
+    tasksReducer
+} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TaskType, todolistsApi} from "./api/todolists-api";
-import {AnyAction} from "redux";
 
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
-
 
 function AppWithRedux() {
 
@@ -32,13 +37,16 @@ function AppWithRedux() {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        //@ts-ignore
         dispatch(FetchTodolistsTC())
     }, [])
 
     const removeTask = useCallback((id: string, todolistId: string) => {
-        //достанем нужный массив по todolistId:
-        dispatch(removeTaskAC(id, todolistId))
-    }, [dispatch]);
+
+       const thunk = removeTaskTC(id, todolistId)
+        //@ts-ignore
+        dispatch(thunk)
+    }, []);
     const addTask = useCallback((title: string, todolistId: string) => {
         dispatch(addTaskAC(title, todolistId))
     }, [dispatch]);

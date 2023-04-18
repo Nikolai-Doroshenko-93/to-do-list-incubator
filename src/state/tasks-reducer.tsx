@@ -128,3 +128,13 @@ export const fetchTasksTC = (todolistId: string) => {
         })
     }
 }
+export const removeTaskTC = (taskId: string, todolistId: string) => {
+
+    return (dispatch: Dispatch) => {
+        todolistsApi.deleteTask(taskId, todolistId)
+            .then(res => {
+                let action = removeTaskAC(taskId, todolistId)
+                dispatch(action)
+            })
+    }
+}
