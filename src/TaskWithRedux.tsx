@@ -26,7 +26,6 @@ const TaskWithRedux = memo(({
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
-
         dispatch(changeTaskStatusAC(todolistId, task.id,  newIsDoneValue));
     }
     const onTitleChangeHandler = (newValue: string) => {
@@ -40,7 +39,6 @@ const TaskWithRedux = memo(({
                 color="primary"
                 onChange={onChangeHandler}
             />
-
             <EditableSpan value={task.title} onChange={onTitleChangeHandler} />
             <IconButton onClick={onClickHandler}>
                 <Delete />

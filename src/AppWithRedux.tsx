@@ -20,7 +20,7 @@ import {
     tasksReducer
 } from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
+import {AppDispatchType, AppRootStateType, useAppDispatchWithType} from "./state/store";
 import {TaskType, todolistsApi} from "./api/todolists-api";
 
 
@@ -34,19 +34,18 @@ function AppWithRedux() {
 
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatchWithType()
 
     useEffect(() => {
-        //@ts-ignore
+
         dispatch(FetchTodolistsTC())
     }, [])
 
     const removeTask = useCallback((id: string, todolistId: string) => {
-
        const thunk = removeTaskTC(id, todolistId)
-        //@ts-ignore
         dispatch(thunk)
     }, []);
+
     const addTask = useCallback((title: string, todolistId: string) => {
         dispatch(addTaskAC(title, todolistId))
     }, [dispatch]);
@@ -97,10 +96,9 @@ function AppWithRedux() {
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>
                 <Grid container spacing={3}>
+
                     {
                         todolists.map(tl => {
-
-
                             return <Grid key={tl.id} item>
                                 <Paper style={{padding: "10px"}}>
                                     <Todolist
