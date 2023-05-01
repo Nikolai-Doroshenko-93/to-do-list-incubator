@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 const settings = {
     withCredentials: true,
@@ -84,7 +84,7 @@ export const todolistsApi = {
         return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
     },
     createTask(title: string, todolistId: string) {
-        return instance.post<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks`, {title: title})
+        return instance.post<ResponseType<{ item: TaskType}>, AxiosResponse<ResponseType<{ item: TaskType}>>, {title: string}>(`todo-lists/${todolistId}/tasks`, {title: title})
     },
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)

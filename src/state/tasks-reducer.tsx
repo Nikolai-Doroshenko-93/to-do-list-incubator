@@ -51,12 +51,13 @@ export const tasksReducer = (state = initialState, action: ActionsType) => {
                 ]
             }
         case 'CHANGE-TASK-STATUS': {
-                let todolistTasks = state[action.todolistId];
-                let newTasksArray = todolistTasks
-                    .map(t => t.id === action.taskId ? {...t, status: action.status} : t);
-
-                state[action.todolistId] = newTasksArray;
-                return ({...state})
+                // let todolistTasks = state[action.todolistId];
+                // let newTasksArray = todolistTasks
+                //     .map(t => t.id === action.taskId ? {...t, status: action.status} : t);
+                //
+                // state[action.todolistId] = newTasksArray;
+                // return ({...state})
+            return {...state, [action.todolistId]: state[action.todolistId].map(m => m.id === action.taskId ? {...m, status: action.status} : m)}
             }
         case 'CHANGE-TASK-TITLE':
             return {
@@ -136,7 +137,7 @@ export const addTasksTC = (todolistId: string, title: string) => {
     return (dispatch: Dispatch) => {
         todolistsApi.createTask(todolistId, title)
             .then((res) => {
-//@ts-ignore
+
                 dispatch(addTaskAC(res.data.data.item))
             })
     }
@@ -158,8 +159,7 @@ export const updateTasksTC = (todolistId: string, taskId: string, status: TaskSt
 
             todolistsApi.updateTask(todolistId, taskId, model)
                 .then((res) => {
-                    changeTaskStatusAC(todolistId, taskId, status)
-                    alert('update task')
+                    dispatch(changeTaskStatusAC(todolistId, taskId, status))
                 })
         }
     }

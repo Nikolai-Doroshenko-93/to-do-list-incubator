@@ -1,15 +1,16 @@
 import React, {ChangeEvent, useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Task from "../Task";
+import Task from "../TaskWithRedux";
 import {action} from "@storybook/addon-actions";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 import {v1} from "uuid";
+import TaskWithRedux from "../TaskWithRedux";
 
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'TodoList/Task',
-  component: Task,
+  component: TaskWithRedux,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   args: {
     removeTask: action('removeTask'),
@@ -69,7 +70,7 @@ const Template1: ComponentStory<typeof Task> = (args) => {
     addedDate: ""
   })
 
-  function changeTaskStatus (taskId: string, completed: boolean)  {
+  function changeTaskStatus (todolistId: string, id: string,  status: TaskStatuses)  {
     setTask({description: "",
       title: "Beer",
       completed: false,

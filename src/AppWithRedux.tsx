@@ -8,7 +8,7 @@ import {Menu} from "@mui/icons-material";
 import {
     AddTodolistAC,
     ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC, FetchTodolistsTC, FilterValuesType,
+    ChangeTodolistTitleAC, FetchTodolistsTC,
     RemoveTodolistAC, TodolistDomainType,
 } from "./state/todolists-reducer";
 import {
@@ -27,6 +27,7 @@ import {TaskStatuses, TaskType, todolistsApi} from "./api/todolists-api";
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
+export type FilterValuesType = "all" | "active" | "completed";
 
 function AppWithRedux() {
 

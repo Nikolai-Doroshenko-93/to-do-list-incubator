@@ -146,6 +146,7 @@ export const UpdateTask = () => {
     const [todolistId, setTodolistId] = useState<string>("")
 
     const UpdateTask = () => {
+        //@ts-ignore
         todolistsApi.updateTask(todolistId, taskId, {
             deadline: "",
             description: description,

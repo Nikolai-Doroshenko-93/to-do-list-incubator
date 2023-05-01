@@ -16,9 +16,6 @@ type TasksPropsType = {
 
 const TaskWithRedux = memo((props: TasksPropsType) => {
 
-
-
-
     const onClickHandler = () => props.removeTask(props.todolistId, props.task.id, )
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
