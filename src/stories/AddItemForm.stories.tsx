@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import {AddItemForm} from "../AddItemForm";
+import {AddItemForm} from "../component/AddItemForn/AddItemForm";
 import {action} from "@storybook/addon-actions";
 import {IconButton, TextField} from "@mui/material";
 import {AddBox} from "@mui/icons-material";

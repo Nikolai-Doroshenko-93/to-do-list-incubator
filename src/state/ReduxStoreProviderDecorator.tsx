@@ -1,6 +1,6 @@
 import React from "react";
-import {AppRootStateType, store} from "./store";
-import AppWithRedux from "../AppWithRedux";
+import {AppRootStateType, store} from "../app/store";
+import AppWithRedux from "../app/AppWithRedux";
 import {Provider} from "react-redux";
 import {combineReducers, legacy_createStore} from "redux";
 import {tasksReducer} from "./tasks-reducer";
@@ -15,8 +15,8 @@ const rootReducer = combineReducers({
 
 const initialGlobalState = {
     todolists: [
-        {id: 'todolistId1', title: 'What to learn', filter: 'all', addedDate: "", order: 0},
-        {id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: "", order: 0}
+        {id: 'todolistId1', title: 'What to learn', filter: 'all', addedDate: "", order: 0, entityStatus: 'idle'},
+        {id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: "", order: 0, entityStatus: 'idle'}
     ],
     tasks: {
         ['todolistId1']: [
@@ -75,6 +75,10 @@ const initialGlobalState = {
                 addedDate: ""
             }
         ]
+    },
+    app: {
+        error: null,
+        status: "idle"
     }
 }
  export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState as AppRootStateType)

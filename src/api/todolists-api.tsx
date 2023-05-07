@@ -1,9 +1,10 @@
 import axios, {AxiosResponse} from "axios";
+import {TodolistDomainType} from "../state/todolists-reducer";
 
 const settings = {
     withCredentials: true,
     headers: {
-        "API-KEY": "837231db-6036-455b-8898-180b09b688b9"
+        "API-KEY": "0ca925e4-9f59-4d59-ac63-6da41cf2f0df"
     }
 }
 const instance = axios.create({
@@ -19,7 +20,7 @@ export type TodolistType = {
 }
 type ResponseType<D = {}> = {
     resultCode: number,
-    message: string[],
+    messages: string[],
     fieldsErrors: string[],
     data: D
 }
@@ -71,13 +72,14 @@ export const todolistsApi = {
         return instance.get<Array<TodolistType>>('todo-lists')
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType>('todo-lists', {title: title})
+        console.log(title)
+        return instance.post<ResponseType<{item: TodolistType}>, AxiosResponse<ResponseType<{ item: TodolistType}>>, {title: string}>('todo-lists', {title})
     },
     deleteTodolist(id: string) {
         return instance.delete<ResponseType>(`todo-lists/${id}`)
     },
     updateTodolist(id: string, title: string) {
-        return instance.put<ResponseType>(`todo-lists/${id}`, {title: title})
+        return instance.put<ResponseType, AxiosResponse<ResponseType>, { title: string }>(`todo-lists/${id}`, {title: title})
     },
 
     getTasks(todolistId: string) {

@@ -1,9 +1,9 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import AppWithRedux from "../AppWithRedux";
+import AppWithRedux from "../app/AppWithRedux";
 import {action} from "@storybook/addon-actions";
 import {Provider} from "react-redux";
-import {store} from "../state/store";
+import {store} from "../app/store";
 import {ReduxStoreProviderDecorator} from "../state/ReduxStoreProviderDecorator";
 
 
