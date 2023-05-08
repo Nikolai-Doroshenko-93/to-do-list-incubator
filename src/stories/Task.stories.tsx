@@ -17,6 +17,7 @@ export default {
     changeTaskStatus: action('changeTaskStatus'),
     changeTaskTitle: action('changeTaskTitle'),
     todolistId: '1234dsrfew',
+    disabled: false,
     task: {description: "",
       title: "Beer",
       completed: false,
@@ -103,6 +104,7 @@ const Template1: ComponentStory<typeof Task> = (args) => {
       removeTask={args.removeTask}
       changeTaskTitle={changeTaskTitle}
       changeTaskStatus={changeTaskStatus}
+      disabled={args.disabled}
   />
 };
 

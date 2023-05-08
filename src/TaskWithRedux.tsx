@@ -12,6 +12,7 @@ type TasksPropsType = {
     changeTaskStatus: (todolistId: string, id: string,  status: TaskStatuses) => void
     changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
     removeTask: (taskId: string, todolistId: string) => void
+    disabled: boolean
 }
 
 const TaskWithRedux = memo((props: TasksPropsType) => {
@@ -32,9 +33,10 @@ const TaskWithRedux = memo((props: TasksPropsType) => {
                 checked={props.task.status === TaskStatuses.Completed}
                 color="primary"
                 onChange={onChangeHandler}
+                disabled={props.disabled}
             />
             <EditableSpan value={props.task.title} onChange={onTitleChangeHandler} />
-            <IconButton onClick={onClickHandler}>
+            <IconButton onClick={onClickHandler} disabled={props.disabled}>
                 <Delete />
             </IconButton>
         </div>

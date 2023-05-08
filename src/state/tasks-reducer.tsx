@@ -8,6 +8,8 @@ import {TaskType, todolistsApi, UpdateTaskType} from "../api/todolists-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../app/store";
 import {setErrorAC, setStatusAC} from "../app/app-reducer";
+import {handleServerAppError, handleServerNetworkAppError} from "../utils/error-utils";
+import {AxiosError} from "axios";
 
 // export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>;
 export type AddTaskActionType = {
@@ -138,13 +140,12 @@ export const addTasksTC = (todolistId: string, title: string) => {
                     dispatch(addTaskAC(res.data.data.item))
                     dispatch(setStatusAC('succeeded'))
                 } else {
-                    if (res.data.messages.length) {
-                        dispatch(setErrorAC(res.data.messages[0]))
-                    } else {
-                        dispatch(setErrorAC('some error occurred'))
-                    }
-                    dispatch(setStatusAC('failed'))
+                    handleServerAppError(dispatch, res.data)
                 }
+            })
+            .catch((e: AxiosError<{messages: string[]}>) => {
+                const error = e.response?.data ? e.response.data.messages : e.message
+                handleServerNetworkAppError(dispatch, e)
             })
     }
 }
@@ -179,13 +180,11 @@ export const updateTasksTC = (todolistId: string, taskId: string, domainModel: U
                     if (res.data.resultCode === 0) {
                         dispatch(updateTask(todolistId, taskId, apiModel))
                     } else {
-                        if(res.data.messages.length) {
-                            dispatch(setErrorAC(res.data.messages[0]))
-                        } else {
-                            dispatch(setErrorAC('some error occurred'))
-                        }
-                        dispatch(setStatusAC('failed'))
+                        handleServerAppError(dispatch, res.data)
                     }
+                })
+                .catch((e) => {
+                    handleServerNetworkAppError(dispatch, e)
                 })
         }
     }
