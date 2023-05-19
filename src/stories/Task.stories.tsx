@@ -1,10 +1,10 @@
 import React, {ChangeEvent, useState} from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Task from "../TaskWithRedux";
+import Task from "../features/TodolistList/Todolist/Task/TaskWithRedux";
 import {action} from "@storybook/addon-actions";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
 import {v1} from "uuid";
-import TaskWithRedux from "../TaskWithRedux";
+import TaskWithRedux from "../features/TodolistList/Todolist/Task/TaskWithRedux";
 
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
