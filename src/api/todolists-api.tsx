@@ -66,7 +66,11 @@ export type UpdateTaskType = {
     deadline: string,
     completed: boolean
 }
-
+export type LoginType = {
+    email: string,
+    password: string,
+    rememberMe: boolean
+}
 export const todolistsApi = {
     getTodolists() {
         return instance.get<Array<TodolistType>>('todo-lists')
@@ -93,5 +97,12 @@ export const todolistsApi = {
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskType) {
         return instance.put(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+    }
+}
+
+
+export const authApi = {
+    login(data: LoginType) {
+        return instance.post<ResponseType<{id: number}>, AxiosResponse<ResponseType<{id: number}>>, any>('auth/login', data)
     }
 }
