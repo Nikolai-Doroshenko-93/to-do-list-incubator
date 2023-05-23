@@ -10,7 +10,8 @@ import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {useDispatch} from "react-redux";
 import {loginTC} from "../../state/auth-reducer";
-import {useAppDispatchWithType} from "../../app/store";
+import {useAppDispatchWithType, useAppSelector} from "../../app/store";
+import {Navigate} from "react-router-dom";
 
 
 type FormikErrorTypes = {
@@ -40,7 +41,8 @@ const validate = (values: any) => {
 
 
 export const Login = () => {
-const dispatch = useAppDispatchWithType()
+    const dispatch = useAppDispatchWithType()
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     const formik = useFormik({
         initialValues: {
@@ -55,6 +57,9 @@ const dispatch = useAppDispatchWithType()
         },
     });
 
+    if(isLoggedIn) {
+        return <Navigate to={'/'}/>
+    }
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>

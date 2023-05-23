@@ -7,10 +7,12 @@ import {tasksReducer} from "./tasks-reducer";
 import {todolistsReducer} from "./todolists-reducer";
 import {v1} from "uuid";
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
+import {authReducer} from "./auth-reducer";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolists: todolistsReducer
+    todolists: todolistsReducer,
+    auth: authReducer
 })
 
 const initialGlobalState = {
@@ -81,6 +83,7 @@ const initialGlobalState = {
         status: "idle"
     }
 }
+//@ts-ignore
  export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState as AppRootStateType)
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {

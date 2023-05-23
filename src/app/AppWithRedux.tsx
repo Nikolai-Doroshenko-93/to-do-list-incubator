@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import AppBar from '@mui/material/AppBar/AppBar';
 import Button from "@mui/material/Button";
@@ -12,17 +12,26 @@ import {ErrorSnackBar} from "../component/ErrorSnackBar/ErrorSnackBar";
 import TodolistsList from "../features/TodolistList/TodolistList";
 import {LinearProgress} from "@mui/material";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "./store";
+import {AppRootStateType, useAppDispatchWithType} from "./store";
 import {RequestStatusType} from "./app-reducer";
 import {Login} from "../features/Login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
+import {meTC} from "../state/auth-reducer";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 export type FilterValuesType = "all" | "active" | "completed";
 function AppWithRedux() {
+
     const  status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+
+    const dispatch = useAppDispatchWithType()
+
+    useEffect(() => {
+        dispatch(meTC())
+    }, [])
+
     return (
         <div className="App">
             <ErrorSnackBar/>

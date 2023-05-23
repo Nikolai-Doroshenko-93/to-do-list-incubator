@@ -1,15 +1,12 @@
 import axios, {AxiosResponse} from "axios";
 import {TodolistDomainType} from "../state/todolists-reducer";
 
-const settings = {
+const instance = axios.create({
+    baseURL: "https://social-network.samuraijs.com/api/1.1/",
     withCredentials: true,
     headers: {
         "API-KEY": "0ca925e4-9f59-4d59-ac63-6da41cf2f0df"
     }
-}
-const instance = axios.create({
-    baseURL: "https://social-network.samuraijs.com/api/1.1/",
-    ...settings
 })
 
 export type TodolistType = {
@@ -71,6 +68,11 @@ export type LoginType = {
     password: string,
     rememberMe: boolean
 }
+export type UserType = {
+    id: number,
+    email: string,
+    login: string
+}
 export const todolistsApi = {
     getTodolists() {
         return instance.get<Array<TodolistType>>('todo-lists')
@@ -102,6 +104,9 @@ export const todolistsApi = {
 
 
 export const authApi = {
+    me() {
+        return instance.get<ResponseType<UserType>>('auth/me')
+    },
     login(data: LoginType) {
         return instance.post<ResponseType<{id: number}>, AxiosResponse<ResponseType<{id: number}>>, any>('auth/login', data)
     }
