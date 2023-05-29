@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux'
-import { SetErrorActionType, setStatusAC, SetStatusActionType } from '../app/app-reducer'
+import {SetErrorActionType, setIsInitializedAC, setStatusAC, SetStatusActionType} from '../app/app-reducer'
 import {authApi, LoginType} from "../api/todolists-api";
 import {handleServerAppError, handleServerNetworkAppError} from "../utils/error-utils";
 
@@ -19,6 +19,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 // actions
 export const setIsLoggedInAC = (value: boolean) =>
     ({type: 'login/SET-IS-LOGGED-IN', value} as const)
+
 
 // thunks
 export const loginTC = (data: LoginType) => async (dispatch: Dispatch<ActionsType>) => {
@@ -51,7 +52,27 @@ export const meTC = () => async (dispatch: Dispatch<ActionsType>) => {
     catch(e) {
         handleServerNetworkAppError(dispatch, (e as any).message)
     }
+    finally {
+        dispatch(setIsInitializedAC(true))
+    }
 }
 
+export const logOutTC = () => async (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setStatusAC('loading'))
+    try {
+        const response = await authApi.logOut()
+        if(response.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(false))
+            dispatch(setStatusAC('succeeded'))
+        } else {
+            handleServerAppError(dispatch, response.data)
+        }
+    }
+    catch(e) {
+        handleServerNetworkAppError(dispatch, (e as any).message)
+    }
+}
+
+
 // types
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetStatusActionType | SetErrorActionType
+type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetStatusActionType | SetErrorActionType | ReturnType<typeof setIsInitializedAC>
