@@ -6,6 +6,7 @@ import {AppRootStateType} from '../../app/store'
 import {setAppErrorAC} from '../../app/app-reducer'
 
 function Alert(props: AlertProps) {
+    //@ts-ignore
     return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
@@ -18,6 +19,7 @@ export function ErrorSnackbar() {
         if (reason === 'clickaway') {
             return
         }
+        //@ts-ignore
         dispatch(setAppErrorAC(null));
     }
 

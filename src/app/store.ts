@@ -22,7 +22,6 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
             .prepend(thunkMiddleware)
-
 });
 
 // определить автоматически тип всего объекта состояния

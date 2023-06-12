@@ -25,34 +25,42 @@ export const {setIsLoggedInAC} = slice.actions
 
 // thunks
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    //@ts-ignore
+    dispatch(setAppStatusAC({status: 'loading'}))
     authAPI.login(data)
         .then(res => {
             if (res.data.resultCode === 0) {
                 //@ts-ignore
                 dispatch(setIsLoggedInAC({value: true}))
-                dispatch(setAppStatusAC('succeeded'))
+                //@ts-ignore
+                dispatch(setAppStatusAC({status: 'succeeded'}))
             } else {
+                //@ts-ignore
                 handleServerAppError(res.data, dispatch)
             }
         })
         .catch((error) => {
+            //@ts-ignore
             handleServerNetworkError(error, dispatch)
         })
 }
 export const logoutTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    //@ts-ignore
+    dispatch(setAppStatusAC({status: 'loading'}))
     authAPI.logout()
         .then(res => {
             if (res.data.resultCode === 0) {
                 //@ts-ignore
                 dispatch(setIsLoggedInAC({value: false}))
-                dispatch(setAppStatusAC('succeeded'))
+                //@ts-ignore
+                dispatch(setAppStatusAC({status: 'succeeded'}))
             } else {
+                //@ts-ignore
                 handleServerAppError(res.data, dispatch)
             }
         })
         .catch((error) => {
+            //@ts-ignore
             handleServerNetworkError(error, dispatch)
         })
 }
