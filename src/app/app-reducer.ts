@@ -1,15 +1,14 @@
 import {Dispatch} from 'redux'
 import {authAPI} from '../api/todolists-api'
 import {setIsLoggedInAC} from '../features/Login/auth-reducer'
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAction, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState: InitialStateType = {
     status: 'idle',
     error: null,
     isInitialized: false
 }
-
-
+export const setAppStatus = createAction<{status: RequestStatusType}>("app/setAppStatus")
 
 const slice = createSlice({
     name: "app",
@@ -24,7 +23,11 @@ const slice = createSlice({
         setAppInitializedAC(state, action: PayloadAction<{value: boolean}>){
             state.isInitialized = action.payload.value
         }
-    }
+    },
+    extraReducers: (builder) => builder.addCase(setAppStatus, (state, action) => {
+        state.status = action.payload.status
+    })
+
 })
 export const appReducer = slice.reducer
 
