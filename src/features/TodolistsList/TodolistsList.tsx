@@ -2,13 +2,12 @@ import React, { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { AppRootStateType } from '../../app/store'
 import {
-	addTodolistTC,
-	changeTodolistFilterAC,
-	changeTodolistTitleTC,
-	fetchTodolistsTC,
-	FilterValuesType,
-	removeTodolistTC,
-	TodolistDomainType
+    addTodolistTC,
+    changeTodolistTitleTC,
+    fetchTodolistsTC,
+    FilterValuesType,
+    removeTodolistTC,
+    TodolistDomainType, todolistsAction
 } from './todolists-reducer'
 import { addTaskTC, removeTaskTC, TasksStateType, updateTaskTC } from './tasks-reducer'
 import { TaskStatuses } from '../../api/todolists-api'
@@ -58,8 +57,7 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     }, [])
 
     const changeFilter = useCallback(function (value: FilterValuesType, todolistId: string) {
-        const action = changeTodolistFilterAC(todolistId, value)
-        dispatch(action)
+        dispatch(todolistsAction.changeTodolistFilter({filter: value, id: todolistId}))
     }, [])
 
     const removeTodolist = useCallback(function (id: string) {
