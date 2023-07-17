@@ -3,7 +3,7 @@ import axios from 'axios'
 const settings = {
     withCredentials: true,
     headers: {
-        'API-KEY': '1cdd9f77-c60e-4af5-b194-659e4ebd5d41'
+        'API-KEY': '0ca925e4-9f59-4d59-ac63-6da41cf2f0df'
     }
 }
 const instance = axios.create({
@@ -21,8 +21,8 @@ export const todolistsAPI = {
         const promise = instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title: title});
         return promise;
     },
-    deleteTodolist(id: string) {
-        const promise = instance.delete<ResponseType>(`todo-lists/${id}`);
+    deleteTodolist(todolistId: string) {
+        const promise = instance.delete<ResponseType>(`todo-lists/${todolistId}`);
         return promise;
     },
     updateTodolist(id: string, title: string) {
@@ -32,7 +32,7 @@ export const todolistsAPI = {
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`);
     },
-    deleteTask(todolistId: string, taskId: string) {
+    deleteTask(taskId: string, todolistId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`);
     },
     createTask(todolistId: string, taskTitile: string) {

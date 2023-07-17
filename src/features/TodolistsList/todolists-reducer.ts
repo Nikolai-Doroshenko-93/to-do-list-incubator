@@ -41,7 +41,7 @@ export const todolistsAction = slice.actions
 
 // thunks
 export const fetchTodolistsTC = (): AppThunk => {
-    return (dispatch) => {
+    return (dispatch: Dispatch) => {
         dispatch(appAction.setAppStatus({status: 'loading'}))
         todolistsAPI.getTodolists()
             .then((res) => {
@@ -54,7 +54,7 @@ export const fetchTodolistsTC = (): AppThunk => {
     }
 }
 export const removeTodolistTC = (todolistId: string) => {
-    return (dispatch: ThunkDispatch) => {
+    return (dispatch: Dispatch) => {
         //изменим глобальный статус приложения, чтобы вверху полоса побежала
         dispatch(appAction.setAppStatus({status: 'loading'}))
         //изменим статус конкретного тудулиста, чтобы он мог задизеблить что надо
@@ -68,7 +68,7 @@ export const removeTodolistTC = (todolistId: string) => {
     }
 }
 export const addTodolistTC = (title: string) => {
-    return (dispatch: ThunkDispatch) => {
+    return (dispatch: Dispatch) => {
         dispatch(appAction.setAppStatus({status: 'loading'}))
         todolistsAPI.createTodolist(title)
             .then((res) => {
