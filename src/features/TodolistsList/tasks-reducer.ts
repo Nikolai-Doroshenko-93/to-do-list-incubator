@@ -13,8 +13,9 @@ const slice = createSlice({
     initialState: {} as TasksStateType,
     reducers: {
         removeTask: (state, action: PayloadAction<{taskId: string, todolistId: string}>) => {
-            const index = state[action.payload.todolistId].findIndex(t => t.id === action.payload.taskId)
-            if(index !== -1) state[action.payload.todolistId].slice(index, 1)
+            const tasks = state[action.payload.todolistId]
+            const index = tasks.findIndex(t => t.id === action.payload.taskId)
+            if(index !== -1) tasks.slice(index, 1)
         },
         addTask: (state, action: PayloadAction<{ task: TaskType }>) => {
             let tasksForCurrentTodolist = state[action.payload.task.todoListId] as TaskType[]
@@ -32,7 +33,7 @@ const slice = createSlice({
     extraReducers:(builder) => {
         builder
             .addCase(todolistsAction.addTodolist, (state, action) => {
-           state[action.payload.todolist.id] = []
+                state[action.payload.todolist.id] = []
         })
             .addCase(todolistsAction.removeTodolist, (state, action) => {
                 delete state[action.payload.id]
