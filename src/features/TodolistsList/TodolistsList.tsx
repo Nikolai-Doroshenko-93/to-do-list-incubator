@@ -8,7 +8,7 @@ import {
   removeTodolistTC,
   todolistsActions,
 } from "features/TodolistsList/todolists.reducer";
-import { addTask, removeTaskTC, tasksThunks, updateTaskTC } from "features/TodolistsList/tasks.reducer";
+import { removeTaskTC, tasksThunks } from "features/TodolistsList/tasks.reducer";
 import { TaskStatuses } from "api/todolists-api";
 import { Grid, Paper } from "@mui/material";
 import { AddItemForm } from "components/AddItemForm/AddItemForm";
@@ -20,7 +20,7 @@ import { selectTasks } from "features/TodolistsList/tasks.selectors";
 import { selectTodolists } from "features/TodolistsList/todolists.selectors";
 
 type PropsType = {
-  demo?: boolean;
+  demo: boolean;
 };
 
 export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
@@ -43,18 +43,21 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
     dispatch(thunk);
   }, []);
 
+  // const removeTask = useCallback(function (id: string, todolistId: string) {
+  //   const thunk = tasksThunks.removeTask.fulfilled({id, todolistId});
+  //   dispatch(thunk);
+  // }, []);
+
   const addTask = useCallback(function (title: string, todolistId: string) {
     dispatch(tasksThunks.addTask({ todolistId, title }));
   }, []);
 
-  const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
-    const thunk = updateTaskTC(id, { status }, todolistId);
-    dispatch(thunk);
+  const changeStatus = useCallback(function (taskId: string, status: TaskStatuses, todolistId: string) {
+    dispatch(tasksThunks.updateTask({ taskId, todolistId, domainModel: { status } }));
   }, []);
 
-  const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
-    const thunk = updateTaskTC(id, { title: newTitle }, todolistId);
-    dispatch(thunk);
+  const changeTaskTitle = useCallback(function (taskId: string, newTitle: string, todolistId: string) {
+    dispatch(tasksThunks.updateTask({ taskId, domainModel: { title: newTitle }, todolistId }));
   }, []);
 
   const changeFilter = useCallback(function (filter: FilterValuesType, id: string) {
