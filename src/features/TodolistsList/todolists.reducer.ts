@@ -4,6 +4,7 @@ import { handleServerNetworkError } from "utils/error-utils";
 import { AppThunk } from "app/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearTasksAndTodolists } from "common/actions/common.actions";
+import { createAppAsyncThunk } from "../../utils/create-app-async-thunk";
 
 const initialState: TodolistDomainType[] = [];
 
@@ -44,16 +45,35 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(clearTasksAndTodolists, (state, action) => {
-      return action.payload.todolists;
-    });
+    builder
+      // .addCase(fetchTodolists.fulfilled, (state, action) => {
+      //    action.payload.todolists.map((tl: any) => ({ ...tl, filter: "all", entityStatus: "idle" }));
+      // })
+      .addCase(clearTasksAndTodolists, (state, action) => {
+        return action.payload.todolists;
+      });
   },
 });
 
-export const todolistsReducer = slice.reducer;
-export const todolistsActions = slice.actions;
-
 // thunks
+
+// export const fetchTodolists = createAppAsyncThunk<{todolists: TodolistType[]}, any>(
+//   "todolists/fetchTodolist",
+//   async (thunkAPI) => {
+//     const { dispatch, rejectWithValue } = thunkAPI;
+//     try {
+//       dispatch(appActions.setAppStatus({ status: "loading" }));
+//       const res = await todolistsAPI.getTodolists()
+//       dispatch(appActions.setAppStatus({ status: "succeeded" }));
+//       return { todolists: res.data };
+//     }
+//     catch(e) {
+//       handleServerNetworkError(e, dispatch);
+//       return rejectWithValue(null);
+//     }
+//   }
+// )
+
 export const fetchTodolistsTC = (): AppThunk => {
   return (dispatch) => {
     dispatch(appActions.setAppStatus({ status: "loading" }));
@@ -104,3 +124,6 @@ export type TodolistDomainType = TodolistType & {
   filter: FilterValuesType;
   entityStatus: RequestStatusType;
 };
+export const todolistsReducer = slice.reducer;
+export const todolistsActions = slice.actions;
+// export const todolistsThunks = {fetchTodolists}

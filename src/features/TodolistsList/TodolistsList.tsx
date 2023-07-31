@@ -7,6 +7,7 @@ import {
   FilterValuesType,
   removeTodolistTC,
   todolistsActions,
+  todolistsThunks,
 } from "features/TodolistsList/todolists.reducer";
 import { removeTaskTC, tasksThunks } from "features/TodolistsList/tasks.reducer";
 import { TaskStatuses } from "api/todolists-api";
@@ -35,6 +36,14 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
       return;
     }
     const thunk = fetchTodolistsTC();
+    dispatch(thunk);
+  }, []);
+
+  useEffect(() => {
+    if (demo || !isLoggedIn) {
+      return;
+    }
+    const thunk = todolistsThunks.fetchTodolists.fulfilled();
     dispatch(thunk);
   }, []);
 
