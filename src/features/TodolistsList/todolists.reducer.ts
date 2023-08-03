@@ -49,6 +49,10 @@ const slice = createSlice({
       // .addCase(fetchTodolists.fulfilled, (state, action) => {
       //    action.payload.todolists.map((tl: any) => ({ ...tl, filter: "all", entityStatus: "idle" }));
       // })
+      //   .addCase(removeTodolist.fulfilled, (state, action) => {
+      //     const index = state.findIndex((todo) => todo.id === action.payload.id);
+      //     if (index !== -1) state.splice(index, 1);
+      //   })
       .addCase(clearTasksAndTodolists, (state, action) => {
         return action.payload.todolists;
       });
