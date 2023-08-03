@@ -1,6 +1,6 @@
 import { todolistsAPI, TodolistType } from "api/todolists-api";
 import { appActions, RequestStatusType } from "app/app.reducer";
-import { handleServerNetworkError } from "utils/error-utils";
+import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { AppThunk } from "app/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearTasksAndTodolists } from "common/actions/common.actions";
@@ -88,6 +88,25 @@ export const fetchTodolistsTC = (): AppThunk => {
       });
   };
 };
+
+// const removeTodolist = createAppAsyncThunk<any, any>(
+//   "todolists/removeTodolist",
+//   async (arg: any, thunkAPI) => {
+//     const { dispatch, rejectWithValue } = thunkAPI;
+//     try {
+//       const res = await todolistsAPI.deleteTodolist(arg.id)
+//       if(res.data.resultCode === 0) {
+//         dispatch(todolistsActions.removeTodolist(arg));
+//         return rejectWithValue(null);
+//       }
+//     }
+//     catch (e) {
+//       handleServerNetworkError(e, dispatch);
+//       return rejectWithValue(null);
+//     }
+// }
+// )
+
 export const removeTodolistTC = (id: string): AppThunk => {
   return (dispatch) => {
     //изменим глобальный статус приложения, чтобы вверху полоса побежала
@@ -101,6 +120,30 @@ export const removeTodolistTC = (id: string): AppThunk => {
     });
   };
 };
+
+// const addTodolist = createAppAsyncThunk < any, any>(
+//   "todolists/addTodolist",
+//   async (arg: any, thunkAPI) => {
+//     const { dispatch, rejectWithValue } = thunkAPI;
+//     try {
+//     const res = await todolistsAPI.deleteTodolist(arg.todolistId)
+//     if(res.data.resultCode === 0) {
+//       const todolist = { todolist: res.data.data };
+//       dispatch(appActions.setAppStatus({ status: "succeeded" }));
+//       return todolist
+//     }
+//     else {
+//         handleServerAppError(res.data, dispatch);
+//         return rejectWithValue(null);
+//       }
+//     }
+//   catch (e) {
+//       handleServerNetworkError(e, dispatch);
+//       return rejectWithValue(null);
+//     }
+//   }
+// )
+
 export const addTodolistTC = (title: string): AppThunk => {
   return (dispatch) => {
     dispatch(appActions.setAppStatus({ status: "loading" }));
