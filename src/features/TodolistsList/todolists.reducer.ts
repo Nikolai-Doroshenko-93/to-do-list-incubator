@@ -53,6 +53,16 @@ const slice = createSlice({
       //     const index = state.findIndex((todo) => todo.id === action.payload.id);
       //     if (index !== -1) state.splice(index, 1);
       //   })
+      // .addCase(addTodolist.fulfilled, (state, action) => {
+      //   const newTodolist: TodolistDomainType = { ...action.payload.todolist, filter: "all", entityStatus: "idle" };
+      //   state.unshift(newTodolist);
+      // })
+      // .addCase(changeTodolistTitle.fulfilled, (state, action) => {
+      //   const todo = state.find((todo) => todo.id === action.payload.id);
+      //   if (todo) {
+      //     todo.title = action.payload.title;
+      //   }
+      // })
       .addCase(clearTasksAndTodolists, (state, action) => {
         return action.payload.todolists;
       });
