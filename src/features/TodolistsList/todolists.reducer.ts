@@ -153,6 +153,23 @@ export const addTodolistTC = (title: string): AppThunk => {
     });
   };
 };
+// const changeTodolistTitle = createAppAsyncThunk<any, any>(
+//   "todolists/changeTodolistTitle",
+//   async (arg: any, thunkAPI) => {
+//     const { dispatch, rejectWithValue } = thunkAPI;
+//     try {
+//       const res = await todolistsAPI.updateTodolist(arg.todolistId, arg.title)
+//       if (res.data.resultCode === 0) {
+//         dispatch(todolistsActions.changeTodolistTitle({ id: arg.todolistId, title: arg.title }));
+//         return rejectWithValue(null);
+//       }
+//     }
+//     catch(e) {
+//       handleServerNetworkError(e, dispatch);
+//       return rejectWithValue(null);
+//     }
+//   }
+// )
 export const changeTodolistTitleTC = (id: string, title: string): AppThunk => {
   return (dispatch) => {
     todolistsAPI.updateTodolist(id, title).then((res) => {
