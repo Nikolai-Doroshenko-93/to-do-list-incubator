@@ -71,22 +71,21 @@ const slice = createSlice({
 
 // thunks
 
-// export const fetchTodolists = createAppAsyncThunk<{todolists: TodolistType[]}, any>(
+// export const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, any>(
 //   "todolists/fetchTodolist",
 //   async (thunkAPI) => {
 //     const { dispatch, rejectWithValue } = thunkAPI;
 //     try {
 //       dispatch(appActions.setAppStatus({ status: "loading" }));
-//       const res = await todolistsAPI.getTodolists()
+//       const res = await todolistsAPI.getTodolists();
 //       dispatch(appActions.setAppStatus({ status: "succeeded" }));
 //       return { todolists: res.data };
-//     }
-//     catch(e) {
+//     } catch (e) {
 //       handleServerNetworkError(e, dispatch);
 //       return rejectWithValue(null);
 //     }
 //   }
-// )
+// );
 
 export const fetchTodolistsTC = (): AppThunk => {
   return (dispatch) => {
@@ -200,4 +199,4 @@ export type TodolistDomainType = TodolistType & {
 };
 export const todolistsReducer = slice.reducer;
 export const todolistsActions = slice.actions;
-// export const todolistsThunks = {fetchTodolists}
+export const todolistsThunks = { fetchTodolistsTC };
