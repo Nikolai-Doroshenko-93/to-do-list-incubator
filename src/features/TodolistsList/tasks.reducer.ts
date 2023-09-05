@@ -77,31 +77,31 @@ const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: string }
   }
 );
 
-// const removeTask = createAppAsyncThunk<any, any>(
-//   "tasks/removeTask",
-//   async (arg: RemoveTaskArgType, thunkAPI) => {
-//     const { dispatch, rejectWithValue } = thunkAPI;
-//     try {
-//       const res = await todolistsAPI.deleteTask(arg.todolistId, arg.taskId);
-//       if (res.data.resultCode === 0) {
-//         dispatch(tasksActions.removeTask(arg));
-//         return rejectWithValue(null);
-//       }
-//     } catch (e) {
-//       handleServerNetworkError(e, dispatch);
-//       return rejectWithValue(null);
-//     }
-//   }
+const removeTask = createAppAsyncThunk<any, any>(
+  "tasks/removeTask",
+  async (arg: RemoveTaskArgType, thunkAPI) => {
+    const { dispatch, rejectWithValue } = thunkAPI;
+    try {
+      const res = await todolistsAPI.deleteTask(arg.todolistId, arg.taskId);
+      if (res.data.resultCode === 0) {
+        // dispatch(tasksActions.removeTask(arg));
+        return {taskId: arg.taskId, todolistId: arg.todolistId}
+      }
+    } catch (e) {
+      handleServerNetworkError(e, dispatch);
+      return rejectWithValue(null);
+    }})
+
 // );
 
-export const removeTask = createAppAsyncThunk(
-  "tasks/removeTask",
-  (arg: { taskId: string; todolistId: string }, thunkAPI) => {
-    return todolistsAPI.deleteTask(arg.todolistId, arg.taskId).then((res) => {
-      return { taskId: arg.taskId, todolistId: arg.todolistId };
-    });
-  }
-);
+// export const removeTaskTC = createAppAsyncThunk(
+//   "tasks/removeTask",
+//   (arg: { taskId: string; todolistId: string }, thunkAPI) => {
+//     return todolistsAPI.deleteTask(arg.todolistId, arg.taskId).then((res) => {
+//       return { taskId: arg.taskId, todolistId: arg.todolistId };
+//     });
+//   }
+// );
 
 enum ResultCode {
   success = 0,
