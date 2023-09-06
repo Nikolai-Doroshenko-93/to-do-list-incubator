@@ -1,5 +1,4 @@
 import {
-  removeTask,
   tasksActions,
   tasksReducer,
   TasksStateType,
@@ -92,7 +91,7 @@ beforeEach(() => {
 
 test("correct task should be deleted from correct array", () => {
   let param = { taskId: "2", todolistId: "todolistId2" };
-  const action = removeTask.fulfilled(param, "requstId", param);
+  const action = tasksThunks.removeTask.fulfilled(param, "requstId", param);
 
   const endState = tasksReducer(startState, action);
 
