@@ -6,7 +6,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearTasksAndTodolists } from "common/actions/common.actions";
 import { createAppAsyncThunk } from "../../utils/create-app-async-thunk";
 
-const initialState: TodolistDomainType[] = [];
+
 
 const slice = createSlice({
   name: "todo",
@@ -64,9 +64,10 @@ const slice = createSlice({
 export const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, any>(
   "todolists/fetchTodolist",
   async (param, { dispatch, rejectWithValue }) => {
+    dispatch(appActions.setAppStatus({ status: "loading" }));
+    const res = await todolistsAPI.getTodolists();
     try {
-      dispatch(appActions.setAppStatus({ status: "loading" }));
-      const res = await todolistsAPI.getTodolists();
+
       dispatch(appActions.setAppStatus({ status: "succeeded" }));
       return { todolists: res.data };
     } catch (e) {
