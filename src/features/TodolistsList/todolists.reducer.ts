@@ -104,20 +104,6 @@ export const removeTodolist = createAppAsyncThunk<any, any>(
   }
 );
 
-// export const removeTodolistTC = (id: string): AppThunk => {
-//   return (dispatch) => {
-//     //изменим глобальный статус приложения, чтобы вверху полоса побежала
-//     dispatch(appActions.setAppStatus({ status: "loading" }));
-//     //изменим статус конкретного тудулиста, чтобы он мог задизеблить что надо
-//     dispatch(todolistsActions.changeTodolistEntityStatus({ id, entityStatus: "loading" }));
-//     todolistsAPI.deleteTodolist(id).then((res) => {
-//       dispatch(todolistsActions.removeTodolist({ id }));
-//       //скажем глобально приложению, что асинхронная операция завершена
-//       dispatch(appActions.setAppStatus({ status: "succeeded" }));
-//     });
-//   };
-// };
-
 export const addTodolist = createAppAsyncThunk < any, any>(
   "todolists/addTodolist",
   async (arg: any, thunkAPI) => {
@@ -140,19 +126,6 @@ export const addTodolist = createAppAsyncThunk < any, any>(
     }
   }
 )
-
-// export const addTodolistTC = (title: string): AppThunk => {
-//   return (dispatch) => {
-//     dispatch(appActions.setAppStatus({ status: "loading" }));
-//     todolistsAPI.createTodolist(title).then((res) => {
-//       dispatch(todolistsActions.addTodolist({ todolist: res.data.data.item }));
-//       dispatch(appActions.setAppStatus({ status: "succeeded" }));
-//     });
-//   };
-// };
-
-
-
 const changeTodolistTitle = createAppAsyncThunk < any, any>(
     "todolists/changeTodolistTitle",
     async (arg: {id: string, title: string}, thunkAPI) => {
@@ -168,13 +141,6 @@ const changeTodolistTitle = createAppAsyncThunk < any, any>(
     }
 )
 
-// export const changeTodolistTitleTC = (id: string, title: string): AppThunk => {
-//   return (dispatch) => {
-//     todolistsAPI.updateTodolist(id, title).then((res) => {
-//       dispatch(todolistsActions.changeTodolistTitle({ id, title }));
-//     });
-//   };
-// };
 
 // types
 export type FilterValuesType = "all" | "active" | "completed";
