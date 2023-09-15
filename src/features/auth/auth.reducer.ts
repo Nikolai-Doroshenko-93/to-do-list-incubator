@@ -30,7 +30,7 @@ const slice = createSlice({
 
 
 export const login = createAppAsyncThunk<{isLoggedIn: boolean}, LoginParamsType>(
-    "todolists/login",
+    "auth/login",
     async (arg, thunkAPI) => {
         const {dispatch, rejectWithValue} = thunkAPI
         try {
@@ -52,8 +52,8 @@ export const login = createAppAsyncThunk<{isLoggedIn: boolean}, LoginParamsType>
 
 // thunks
 
-export const logout = createAppAsyncThunk<{isLoggedIn:boolean}, undefined>(
-    "todolists/logout",
+export const logout = createAppAsyncThunk<{isLoggedIn: boolean}, undefined>(
+    "auth/logout",
     async (arg, { dispatch, rejectWithValue }) => {
         dispatch(appActions.setAppStatus({status: "loading"}));
         const res = await authAPI.logout();
@@ -73,7 +73,7 @@ export const logout = createAppAsyncThunk<{isLoggedIn:boolean}, undefined>(
     }
 );
 
-export const initializeApp = createAppAsyncThunk<any, undefined> (
+export const initializeApp = createAppAsyncThunk<{isLoggedIn: boolean}, undefined> (
     'auth/initializeApp', async (arg, thunkAPI) => {
         const {dispatch, rejectWithValue} = thunkAPI
 
@@ -82,6 +82,7 @@ export const initializeApp = createAppAsyncThunk<any, undefined> (
             if(res.data.resultCode == 0) {
                 return { isLoggedIn: true };
             } else {
+                return rejectWithValue(null)
             }}
         catch(e) {
             handleServerNetworkError(e, dispatch);
@@ -94,5 +95,4 @@ export const initializeApp = createAppAsyncThunk<any, undefined> (
     }
 )
 export const authReducer = slice.reducer;
-export const authActions = slice.actions;
-export const authThunks = {login, logout,  initializeApp}
+export const authThunks = {login, logout, initializeApp}
