@@ -1,11 +1,8 @@
 import {authAPI, LoginParamsType, todolistsAPI} from "api/todolists-api";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk } from "app/store";
 import { appActions } from "app/app.reducer";
 import { clearTasksAndTodolists } from "common/actions/common.actions";
-import { tasksActions, tasksReducer } from "../TodolistsList/tasks.reducer";
-import { todolistsActions } from "../TodolistsList/todolists.reducer";
 import {createAppAsyncThunk} from "../../utils/create-app-async-thunk";
 
 const slice = createSlice({
@@ -15,13 +12,16 @@ const slice = createSlice({
   },
     reducers: {},
     extraReducers: (builder) => {
-      builder.addCase(login.fulfilled, (state, action) => {
+      builder
+          .addCase(login.fulfilled, (state, action) => {
           state.isLoggedIn = action.payload.isLoggedIn;
       })
-      builder.addCase(logout.fulfilled, (state, action) => {
+
+          .addCase(logout.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.isLoggedIn;
         })
-        builder.addCase(initializeApp.fulfilled, (state, action) => {
+
+          .addCase(initializeApp.fulfilled, (state, action) => {
             state.isLoggedIn = action.payload.isLoggedIn;
         })
     }
