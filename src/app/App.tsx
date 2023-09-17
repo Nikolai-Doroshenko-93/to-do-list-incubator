@@ -1,11 +1,6 @@
 import React, { useCallback, useEffect } from "react";
-import "./App.css";
-import { TodolistsList } from "features/TodolistsList/TodolistsList";
-import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Login } from "features/auth/Login";
-import {authThunks} from "features/auth/auth.reducer";
 import {
   AppBar,
   Button,
@@ -17,15 +12,17 @@ import {
   Typography,
 } from "@mui/material";
 import { Menu } from "@mui/icons-material";
-import { useAppDispatch } from "hooks/useAppDispatch";
+import { initializeAppTC } from "app/app.reducer";
+import { Login } from "features/auth/Login";
+import { logoutTC } from "features/auth/auth.reducer";
+import "./App.css";
+import { TodolistsList } from "features/TodolistsList/TodolistsList";
+import { ErrorSnackbar } from "common/components";
+import { useAppDispatch } from "common/hooks";
 import { selectIsLoggedIn } from "features/auth/auth.selectors";
 import { selectAppStatus, selectIsInitialized } from "app/app.selectors";
 
-type PropsType = {
-  demo?: boolean;
-};
-
-function App({ demo = false }: PropsType) {
+function App() {
   const status = useSelector(selectAppStatus);
   const isInitialized = useSelector(selectIsInitialized);
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -33,11 +30,11 @@ function App({ demo = false }: PropsType) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(authThunks.initializeApp());
+    dispatch(initializeAppTC());
   }, []);
 
   const logoutHandler = useCallback(() => {
-    dispatch(authThunks.logout());
+    dispatch(logoutTC());
   }, []);
 
   if (!isInitialized) {
@@ -68,7 +65,7 @@ function App({ demo = false }: PropsType) {
         </AppBar>
         <Container fixed>
           <Routes>
-            <Route path={"/"} element={<TodolistsList demo={demo} />} />
+            <Route path={"/"} element={<TodolistsList />} />
             <Route path={"/login"} element={<Login />} />
           </Routes>
         </Container>
