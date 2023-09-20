@@ -4,6 +4,7 @@ import { appActions } from "app/app.reducer";
 import { authAPI, LoginParamsType } from "features/auth/auth.api";
 import { clearTasksAndTodolists } from "common/actions";
 import {createAppAsyncThunk, handleServerAppError, handleServerNetworkError} from "common/utils";
+import {BaseResponseType} from "../../common/types/common.types";
 
 const slice = createSlice({
     name: "auth",
@@ -26,7 +27,7 @@ const slice = createSlice({
 
 
 
-export const login = createAppAsyncThunk<{isLoggedIn: boolean}, LoginParamsType>(
+export const login = createAppAsyncThunk<{isLoggedIn: boolean}, LoginParamsType, {rejectValue: BaseResponseType | null}>(
     "auth/login",
     async (arg, thunkAPI) => {
         const {dispatch, rejectWithValue} = thunkAPI
@@ -37,11 +38,11 @@ export const login = createAppAsyncThunk<{isLoggedIn: boolean}, LoginParamsType>
                 dispatch(appActions.setAppStatus({status: "succeeded"}));
                 return {isLoggedIn: true};
             } else {
-                handleServerNetworkError(res.data, dispatch);
-                return rejectWithValue(null);
+                handleServerAppError(res.data, dispatch, false);
+                return rejectWithValue(res.data);
             }
-        } catch (e) {
-            handleServerNetworkError(e, dispatch);
+        } catch (err) {
+            handleServerNetworkError(err, dispatch);
             return rejectWithValue(null);
         }
     }
