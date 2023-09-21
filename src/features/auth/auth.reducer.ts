@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk } from "app/store";
+import { createSlice } from "@reduxjs/toolkit";
 import { appActions } from "app/app.reducer";
 import { authAPI, LoginParamsType } from "features/auth/auth.api";
 import { clearTasksAndTodolists } from "common/actions";
@@ -38,7 +37,8 @@ export const login = createAppAsyncThunk<{isLoggedIn: boolean}, LoginParamsType,
                 dispatch(appActions.setAppStatus({status: "succeeded"}));
                 return {isLoggedIn: true};
             } else {
-                handleServerAppError(res.data, dispatch, false);
+                const isShowAppError = !res.data.fieldsErrors.length
+                handleServerAppError(res.data, dispatch, isShowAppError);
                 return rejectWithValue(res.data);
             }
         } catch (err) {

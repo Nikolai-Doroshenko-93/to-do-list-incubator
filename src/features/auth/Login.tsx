@@ -34,11 +34,11 @@ export const Login = () => {
     },
     onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
       dispatch(authThunks.login(values))
-          .unwrap()
-          .then((res) => {
-      })
-      .catch((err: BaseResponseType) => {
-        formikHelpers.setFieldError(err.fieldsErrors[0].field, err.fieldsErrors[0].error)
+        .unwrap()
+        .catch((err: BaseResponseType) => {
+            err.fieldsErrors?.forEach((fieldError) => {
+              formikHelpers.setFieldError(fieldError.field, fieldError.error)
+            })
       })
     },
   });
