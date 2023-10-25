@@ -4,6 +4,7 @@ import { todolistsApi, TodolistType, UpdateTodolistTitleArgType } from "features
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "common/utils";
 import { ResultCode } from "common/enums";
 import { clearTasksAndTodolists } from "common/actions";
+import {thunkTryCatch} from "../../common/utils/thunk-try-catch";
 
 const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>(
   "todo/fetchTodolists",
@@ -25,8 +26,7 @@ const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>(
   "todo/addTodolist",
   async (title, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
-    try {
-      dispatch(appActions.setAppStatus({ status: "loading" }));
+    return thunkTryCatch(thunkAPI, async () => {
       const res = await todolistsApi.createTodolist(title);
       if (res.data.resultCode === ResultCode.Success) {
         dispatch(appActions.setAppStatus({ status: "succeeded" }));
@@ -35,18 +35,13 @@ const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>(
         handleServerAppError(res.data, dispatch);
         return rejectWithValue(null);
       }
-    } catch (e) {
-      handleServerNetworkError(e, dispatch);
-      return rejectWithValue(null);
-    }
+    })
   },
 );
 
 const removeTodolist = createAppAsyncThunk<{ id: string }, string>("todo/removeTodolist", async (id, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI;
-  try {
-    dispatch(appActions.setAppStatus({ status: "loading" }));
-    dispatch(todolistsActions.changeTodolistEntityStatus({ id, entityStatus: "loading" }));
+  return thunkTryCatch(thunkAPI, async ()=> {
     const res = await todolistsApi.deleteTodolist(id);
     if (res.data.resultCode === ResultCode.Success) {
       dispatch(appActions.setAppStatus({ status: "succeeded" }));
@@ -54,12 +49,9 @@ const removeTodolist = createAppAsyncThunk<{ id: string }, string>("todo/removeT
     } else {
       handleServerAppError(res.data, dispatch);
       return rejectWithValue(null);
-    }
-  } catch (e) {
-    handleServerNetworkError(e, dispatch);
-    return rejectWithValue(null);
   }
-});
+})
+ });
 
 const changeTodolistTitle = createAppAsyncThunk<UpdateTodolistTitleArgType, UpdateTodolistTitleArgType>(
   "todo/changeTodolistTitle",
