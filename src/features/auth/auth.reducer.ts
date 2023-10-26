@@ -78,12 +78,12 @@ export const initializeApp = createAppAsyncThunk<{isLoggedIn: boolean}, undefine
     return thunkTryCatch(thunkAPI, async ()=> {
     const res = await authAPI.me()
     if(res.data.resultCode == 0) {
-        dispatch(appActions.setAppInitialized({ isInitialized: true }));
         return { isLoggedIn: true };
     } else {
-        dispatch(appActions.setAppInitialized({ isInitialized: true }));
         return rejectWithValue(null)
             }
+        }).finally(() => {
+            dispatch(appActions.setAppInitialized({ isInitialized: true }));
         })
     })
 export const authReducer = slice.reducer;

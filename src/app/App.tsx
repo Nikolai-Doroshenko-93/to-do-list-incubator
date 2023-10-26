@@ -20,6 +20,7 @@ import { useAppDispatch } from "common/hooks";
 import { selectIsLoggedIn } from "features/auth/auth.selectors";
 import { selectAppStatus, selectIsInitialized } from "app/app.selectors";
 import {authThunks} from "../features/auth/auth.reducer";
+import {useActions} from "../common/hooks/useActions";
 
 function App() {
   const status = useSelector(selectAppStatus);
@@ -28,12 +29,14 @@ function App() {
 
   const dispatch = useAppDispatch();
 
+  const {initializeApp, logout} = useActions(authThunks)
+
   useEffect(() => {
-    dispatch(authThunks.initializeApp());
-  }, []);
+    initializeApp();
+  }, []); 
 
   const logoutHandler = useCallback(() => {
-    dispatch(authThunks.logout());
+    logout();
   }, []);
 
   if (!isInitialized) {
