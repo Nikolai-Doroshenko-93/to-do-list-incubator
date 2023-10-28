@@ -33,7 +33,7 @@ function App() {
 
   useEffect(() => {
     initializeApp();
-  }, []); 
+  }, []);
 
   const logoutHandler = useCallback(() => {
     logout();
